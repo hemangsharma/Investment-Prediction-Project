@@ -1,0 +1,4 @@
+Step 1- Data Collection: Set up API integration and fetch historical data.
+Step 2- Data Preprocessing: Clean and preprocess raw data.
+Step 3- Model Development: Build and train prediction models.
+Step 4- Visualization and Analysis: Create charts for insights.
