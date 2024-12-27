@@ -4,10 +4,26 @@ import os
 
 # Define a list of assets with their Yahoo Finance tickers
 ASSETS = {
-    "stocks": ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"],
-    "etfs": ["SPY", "VOO", "QQQ", "VTI"],
-    "commodities": ["GC=F", "CL=F", "SI=F", "HG=F"],  # Gold, Crude Oil, Silver, Copper
-    "currencies": ["EURUSD=X", "JPY=X", "GBPUSD=X", "AUDUSD=X"],  # Currency pairs
+    "stocks": [
+        "AAPL", "KO", "MSFT", "NKE", "JPM", "GE", "BLK", "ALB", "SQM",
+        "TATASTEEL.NS", "HINDALCO.NS", "RIO.AX", "BHP.AX"
+    ],
+    "etfs": [
+        "NDQ.AX", "IOO", "ETHI.AX", "SYI.AX", "IXJ.AX", "IEM.AX", "CRED.AX", 
+        "NDQ.AX", "IOZ.AX", "DHHF.AX", "TQQQ"
+    ],
+    "real_estate": [
+        "SCG.AX", "SGP.AX", "MGR.AX", "DXS.AX", "VAP.AX", "SLF.AX"
+    ],
+    "currencies": [
+        "EURUSD=X", "JPY=X", "GBPUSD=X", "AUDUSD=X"
+    ],
+    "banks": [
+        "NAB.AX", "CBA.AX", "ANZ.AX"
+    ],
+    "commodities": [
+        "GC=F", "CL=F", "SI=F", "HG=F", "PL=F"
+    ]
 }
 
 # Base directory for saving data
@@ -17,7 +33,7 @@ def fetch_and_save_data(asset_type: str, symbols: list):
     """
     Fetch and save historical data for a given list of symbols.
     Args:
-        asset_type (str): Type of asset (e.g., 'stocks', 'etfs', 'commodities', 'currencies').
+        asset_type (str): Type of asset (e.g., 'stocks', 'etfs', 'commodities', 'currencies', 'real_estate', 'banks').
         symbols (list): List of ticker symbols for the asset type.
     """
     # Create directory for the asset type if it doesn't exist
@@ -36,7 +52,7 @@ def fetch_and_save_data(asset_type: str, symbols: list):
             # Reset index and save to CSV
             data.reset_index(inplace=True)
             data.rename(columns={"Date": "timestamp", "Close": "close_price"}, inplace=True)
-            filepath = os.path.join(asset_dir, f"{symbol}.csv")
+            filepath = os.path.join(asset_dir, f"{symbol.replace('=', '').replace('/', '_')}.csv")
             data.to_csv(filepath, index=False)
             print(f"Data for {symbol} saved to {filepath}")
         except Exception as e:
